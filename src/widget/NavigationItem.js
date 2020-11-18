@@ -6,46 +6,53 @@
  * @flow
  */
 
-//import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
-// create a component
-class NavigationItem extends Component {
-    render() {
-        let icon = this.props.icon &&
-            <Image style={[styles.icon, this.props.iconStyle]} source={this.props.icon} />
+import React, { PureComponent } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Image, ViewPropTypes } from 'react-native'
 
-        let title = this.props.title &&
-            <Text style={[styles.title, this.props.titleStyle]}>{this.props.title}</Text>
-        return (
-            <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
-                {icon}
-                {title}
-            </TouchableOpacity>
-        );
-    }
+type Props = {
+  icon?: any,
+  iconStyle?: ViewPropTypes.style,
+  titleStyle?: ViewPropTypes.style,
+  title?: string,
+  onPress?: Function,
 }
 
-// define your styles
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 40,
-    },
-    icon: {
-        width: 27,
-        height: 27,
-        marginBottom: 18,
-    },
-    title: {
-        fontSize: 15,
-        marginBottom: 15,
-        color: '#333333'
-    }
-});
+class NavigationItem extends PureComponent<Props> {
+  render() {
+    let icon = this.props.icon &&
+      <Image style={[styles.icon, this.props.iconStyle]} source={this.props.icon} />
 
-//make this component available to the app
-export default NavigationItem;
+    let title = this.props.title &&
+      <Text style={[styles.title, this.props.titleStyle]}>{this.props.title}</Text>
+    return (
+      <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
+        {icon}
+        {title}
+      </TouchableOpacity>
+    )
+  }
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 27,
+    height: 27,
+    margin: 8,
+  },
+  title: {
+    fontSize: 15,
+    color: '#333333',
+    margin: 8,
+  }
+})
+
+
+export default NavigationItem

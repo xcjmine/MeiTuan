@@ -6,51 +6,52 @@
  * @flow
  */
 
-//import liraries
-import React, { Component, PropTypes } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-// create a component
-class Button extends Component {
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { View, Text, StyleSheet, TouchableOpacity, ViewPropTypes } from 'react-native'
 
-    static propTypes = {
-        onPress: PropTypes.func,
-        disabled: PropTypes.bool,
-        style: Text.propTypes.style,
-        containerStyle: View.propTypes.style,
-        title: PropTypes.string,
-        activeOpacity: PropTypes.number
-    }
+type Props = {
+  onPress: Function,
+  disabled: boolean,
+  style: ViewPropTypes.style,
 
-    static defaultProps = {
-        onPress() { },
-        disabled: false,
-        activeOpacity: 0.8
-    }
-
-    render() {
-        let   { onPress, disabled, style, containerStyle, title, activeOpacity } = this.props
-        return (
-            <TouchableOpacity
-                style={[styles.container, containerStyle]}
-                onPress={onPress}
-                disabled={disabled}
-                activeOpacity={activeOpacity}
-            >
-                <Text style={style}>
-                    {title}
-                </Text>
-            </TouchableOpacity>
-        );
-    }
+  title: string,
+  titleStyle: ViewPropTypes.style,
+  activeOpacity: number
 }
-// define your styles
-const styles = StyleSheet.create({
-    container: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
 
-//make this component available to the app
-export default Button;
+class Button extends PureComponent<Props> {
+
+  static defaultProps = {
+    onPress: () => { },
+    disabled: false,
+    activeOpacity: 0.8
+  }
+
+  render() {
+    let { onPress, disabled, style, titleStyle, title, activeOpacity } = this.props
+    return (
+      <TouchableOpacity
+        style={[styles.container, style]}
+        onPress={onPress}
+        disabled={disabled}
+        activeOpacity={activeOpacity}
+      >
+        <Text style={titleStyle}>
+          {title}
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})
+
+
+export default Button
